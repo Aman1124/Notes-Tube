@@ -7,44 +7,50 @@
     tools:context=".RegisterActivity">
 
     <ImageView
-        android:id="@+id/wave_header"
+        android:id="@+id/regWave_header"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:src="@drawable/ic_wave_top"
         android:scaleType="fitXY"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:transitionName="waveHeader_transition"/>
 
     <ImageView
-        android:id="@+id/welcome_IV"
+        android:id="@+id/reg_welcome_IV"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:src="@drawable/welcome"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/wave_header"
+        app:layout_constraintBottom_toBottomOf="@id/regWave_header"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.15"/>
+        app:layout_constraintVertical_bias="0.15"
+        android:transitionName="welcomeIV_transition"/>
 
     <ImageView
+        android:id="@+id/regEllipse3"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/ic_ellipse_3"
-        app:layout_constraintTop_toBottomOf="@id/welcome_IV"
-        app:layout_constraintBottom_toBottomOf="@id/welcome_IV"
+        app:layout_constraintTop_toBottomOf="@id/reg_welcome_IV"
+        app:layout_constraintBottom_toBottomOf="@id/reg_welcome_IV"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="15dp"/>
+        android:layout_marginStart="15dp"
+        android:transitionName="ellipse3_transition"/>
 
     <ImageView
+        android:id="@+id/regEllipse4"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:src="@drawable/ic_ellipse_4"
-        app:layout_constraintTop_toBottomOf="@id/welcomeTV"
+        app:layout_constraintTop_toBottomOf="@id/reg_welcomeTV"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="55dp"/>
+        android:layout_marginStart="55dp"
+        android:transitionName="ellipse4_transition"/>
 
     <TextView
-        android:id="@+id/welcomeTV"
+        android:id="@+id/reg_welcomeTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User Registration"
@@ -52,15 +58,16 @@
         android:textSize="25sp"
         android:textColor="#fff"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/welcome_IV"
-        app:layout_constraintLeft_toLeftOf="@id/welcome_IV"
-        app:layout_constraintRight_toRightOf="@id/welcome_IV"/>
+        app:layout_constraintTop_toBottomOf="@id/reg_welcome_IV"
+        app:layout_constraintLeft_toLeftOf="@id/reg_welcome_IV"
+        app:layout_constraintRight_toRightOf="@id/reg_welcome_IV"
+        android:transitionName="welcomeTV_transition"/>
 
     <LinearLayout
         android:id="@+id/mainContentView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/wave_header"
+        app:layout_constraintTop_toBottomOf="@id/regWave_header"
         app:layout_constraintBottom_toTopOf="@id/regSignUpButton"
         app:layout_constraintVertical_bias="0.3"
         android:orientation="vertical"
@@ -172,7 +179,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/regSignInButton"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="15dp"
+        android:transitionName="signIn_transition"/>
 
     <Button
         android:id="@+id/regSignInButton"
@@ -189,6 +197,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="30dp"
+        android:transitionName="signUp_transition"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
