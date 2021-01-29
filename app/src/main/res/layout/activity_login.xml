@@ -34,7 +34,8 @@
         app:layout_constraintTop_toBottomOf="@id/welcome_IV"
         app:layout_constraintBottom_toBottomOf="@id/welcome_IV"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="25dp"/>
+        android:layout_marginStart="25dp"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:layout_width="20dp"
@@ -42,13 +43,14 @@
         android:src="@drawable/ic_ellipse_4"
         app:layout_constraintTop_toBottomOf="@id/welcomeTV"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="65dp"/>
+        android:layout_marginStart="65dp"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/welcomeTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome"
+        android:text="@string/welcome"
         android:fontFamily="@font/segoe_ui"
         android:textSize="25sp"
         android:textColor="#fff"
@@ -75,7 +77,8 @@
             android:fontFamily="@font/segoe_ui"
             android:textSize="17sp"
             android:textColor="#707070"
-            android:layout_marginStart="20dp"/>
+            android:layout_marginStart="20dp"
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/loginEmailEditText"
