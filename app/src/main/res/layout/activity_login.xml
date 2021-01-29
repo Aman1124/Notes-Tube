@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="#fff">
+
+    <ImageView
+        android:id="@+id/wave_header"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:src="@drawable/ic_wave_top"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/welcome_IV"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:src="@drawable/welcome"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/wave_header"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.25"/>
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_ellipse_3"
+        app:layout_constraintTop_toBottomOf="@id/welcome_IV"
+        app:layout_constraintBottom_toBottomOf="@id/welcome_IV"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="25dp"/>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_ellipse_4"
+        app:layout_constraintTop_toBottomOf="@id/welcomeTV"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="65dp"/>
+
+    <TextView
+        android:id="@+id/welcomeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:fontFamily="@font/segoe_ui"
+        android:textSize="25sp"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/welcome_IV"
+        app:layout_constraintLeft_toLeftOf="@id/welcome_IV"
+        app:layout_constraintRight_toRightOf="@id/welcome_IV"/>
+
+    <LinearLayout
+        android:id="@+id/mainContentView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/wave_header"
+        app:layout_constraintBottom_toTopOf="@id/loginSignInButton"
+        app:layout_constraintVertical_bias="0.3"
+        android:orientation="vertical"
+        android:paddingRight="35dp"
+        android:paddingLeft="35dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E-mail"
+            android:fontFamily="@font/segoe_ui"
+            android:textSize="17sp"
+            android:textColor="#707070"
+            android:layout_marginStart="20dp"/>
+
+        <EditText
+            android:id="@+id/loginEmailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_box_bg"
+            android:layout_marginTop="5dp"
+            android:hint="someone@email.com"
+            android:textSize="17sp"
+            android:drawableEnd="@drawable/ic_mail"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:fontFamily="@font/segoe_ui"
+            android:textSize="17sp"
+            android:textColor="#707070"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="20dp"/>
+
+        <EditText
+            android:id="@+id/loginPasswordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_box_bg"
+            android:layout_marginTop="5dp"
+            android:hint="Enter your password"
+            android:textSize="17sp"
+            android:drawableEnd="@drawable/ic_lock"
+            android:inputType="textPassword"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/loginSignInButton"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="Sign In"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:fontFamily="@font/segoe_ui"
+        android:textColor="#fff"
+        android:background="@drawable/button_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/loginSignUpButton"
+        android:layout_marginBottom="15dp"/>
+
+    <Button
+        android:id="@+id/loginSignUpButton"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="Sign Up"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:fontFamily="@font/segoe_ui"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/button_bg"
+        android:backgroundTint="#eeeeee"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="50dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
