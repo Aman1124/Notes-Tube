@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> youtubeLinks,thumbnails,titles,descriptions,channels,times;
     ArrayList<Bitmap> thumbs;
 
+    int fragID = 1;
+
     String[] title = new String[]{"Abc", "Xyz", "Pqr"};
     String[] channel = new String[]{"123", "789", "098"};
     String[] time = new String[]{"1 min ago", "10 min ago", "7 days ago"};
@@ -117,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
                        break;
                    default:
                        selectedFragment = new Dashboard(titles, channels, times, thumbs);
+                       changeView();
+                       fragID = 1;
                        break;
                }
                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
@@ -126,7 +130,13 @@ public class MainActivity extends AppCompatActivity {
        });
 
         mAuth=FirebaseAuth.getInstance();
-        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=mann-mast-magan&type=video&key=AIzaSyAKqsBfJa1xl1c265-Db7KNycAP1GeaZ-M";
+        changeView();
+    }
+
+    private void changeView(){
+        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q="+
+                "mann mast magan"+
+                "&type=video&key=AIzaSyAKqsBfJa1xl1c265-Db7KNycAP1GeaZ-M";
 
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         assert mgr != null;
@@ -134,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             DownloadTask task = new DownloadTask();
             task.execute(url);
-
+            fragID = 1;
         } catch (Exception e){
             Toast.makeText(getApplicationContext(),"Unable to find weather!",Toast.LENGTH_LONG).show();
         }
@@ -178,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     DownloadTask task = new DownloadTask();
                     task.execute(url);
-
+                    fragID = 2;
                 } catch (Exception e){
                     Toast.makeText(getApplicationContext(),"Unable to find weather!",Toast.LENGTH_LONG).show();
                 }
@@ -190,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
+
         };
         searchView.setOnQueryTextListener(queryTextListener);
 
@@ -294,8 +305,16 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println(youtubeLinks.get(i)+" "+titles.get(i));
                 }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
-                        new Dashboard(titles, channels, times, thumbs)).commit();
+
+                if(fragID == 1)
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
+                            new Dashboard(titles, channels, times, thumbs)).commit();
+                else if(fragID == 2)
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
+                            new SearchFragment(titles, channels, times, thumbs)).commit();
+
+                //Toast.makeText(MainActivity.this, "Fetching Complete" + fragID, Toast.LENGTH_SHORT).show();
+
 
             } catch (Exception e) {
                 e.printStackTrace();

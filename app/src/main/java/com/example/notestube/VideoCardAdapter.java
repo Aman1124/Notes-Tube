@@ -46,7 +46,10 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.view
 
     @Override
     public int getItemCount() {
-        return videoTitle.size();
+        if(videoTitle != null)
+            return videoTitle.size();
+        else
+            return 0;
     }
 
     public static class viewHolder extends RecyclerView.ViewHolder {

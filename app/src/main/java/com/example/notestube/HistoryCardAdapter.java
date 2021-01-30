@@ -41,7 +41,10 @@ public class HistoryCardAdapter extends RecyclerView.Adapter<HistoryCardAdapter.
 
     @Override
     public int getItemCount() {
-        return videoTitle.length;
+        if(videoTitle != null)
+            return videoTitle.length;
+        else
+            return 0;
     }
 
     public static class viewHolder extends RecyclerView.ViewHolder {
