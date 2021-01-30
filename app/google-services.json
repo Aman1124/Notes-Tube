@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "594042993468",
+    "project_id": "notestube-fd007",
+    "storage_bucket": "notestube-fd007.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594042993468:android:3fcbaec26a598119533c39",
+        "android_client_info": {
+          "package_name": "com.example.notestube"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594042993468-jt1vgbnineral7ief5370psfsbblsrhe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcag8YEMCKOOk8ask34IE7Hqb7YWlHmzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594042993468-jt1vgbnineral7ief5370psfsbblsrhe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

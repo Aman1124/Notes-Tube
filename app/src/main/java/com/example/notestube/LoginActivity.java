@@ -1,57 +1,84 @@
 package com.example.notestube;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Pair;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-
-    Button signIn, signUp;
-    ImageView ellipse3, ellipse4, welcomeIV, waveHeader;
-    TextView welcomeTV;
+    EditText mEmail, mPassword;
+    Button mSignIn, mSignUp;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        signUp = findViewById(R.id.loginSignUpButton);
-        signIn = findViewById(R.id.loginSignInButton);
-        ellipse3 = findViewById(R.id.loginEllipse3);
-        ellipse4 = findViewById(R.id.loginEllipse4);
-        welcomeIV = findViewById(R.id.login_welcome_IV);
-        waveHeader = findViewById(R.id.loginWaveHeader);
-        welcomeTV = findViewById(R.id.login_welcomeTV);
+        mSignUp = findViewById(R.id.loginSignUpButton);
+        mEmail = findViewById(R.id.loginEmailEditText);
+        mPassword = findViewById(R.id.loginPasswordEditText);
+        mSignIn = findViewById(R.id.loginSignInButton);
 
-        signUp.setOnClickListener(new View.OnClickListener() {
+        mSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-
-                Pair[] pairs = new Pair[7];
-                pairs[0] = new Pair<View, String>(waveHeader, "waveHeader_transition");
-                pairs[1] = new Pair<View, String>(welcomeIV, "welcomeIV_transition");
-                pairs[2] = new Pair<View, String>(ellipse3, "ellipse3_transition");
-                pairs[3] = new Pair<View, String>(ellipse4, "ellipse4_transition");
-                pairs[4] = new Pair<View, String>(signIn, "signIn_transition");
-                pairs[5] = new Pair<View, String>(signUp, "signUp_transition");
-                pairs[6] = new Pair<View, String>(welcomeTV, "welcomeTV_transition");
-
-                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
-
-                startActivity(intent, activityOptions.toBundle());
+                startActivity(intent);
+                finish();
             }
         });
-
         Intent intent = getIntent();
+
+        mAuth = FirebaseAuth.getInstance();
+
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
+
+        mSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = mEmail.getText().toString().trim();
+                String password = mPassword.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email)) {
+                    mEmail.setError("Email is required");
+                    return;
+                }
+                if (TextUtils.isEmpty(password)) {
+                    mPassword.setError("Password is required");
+                    return;
+                }
+
+                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Logged In", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+            }
+        });
     }
 }
