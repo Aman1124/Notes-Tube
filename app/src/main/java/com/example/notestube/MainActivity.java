@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                        selectedFragment = new History(title, channel, img);
                        break;
                    default:
-                       selectedFragment = new Dashboard(titles, channels, times, thumbs, youtubeLinks);
+                       selectedFragment = new Dashboard(titles, channels, times, thumbs, youtubeLinks, descriptions);
                        fragID = 1;
                        openHome();
                        break;
@@ -308,10 +308,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(fragID == 1)
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
-                            new Dashboard(titles, channels, times, thumbs, youtubeLinks)).commit();
+                            new Dashboard(titles, channels, times, thumbs, youtubeLinks, descriptions)).commit();
                 else if(fragID == 2)
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
-                            new SearchFragment(titles, channels, times, thumbs, youtubeLinks)).commit();
+                            new SearchFragment(titles, channels, times, thumbs, youtubeLinks, descriptions)).commit();
 
                 //Toast.makeText(MainActivity.this, "Fetching Complete" + fragID, Toast.LENGTH_SHORT).show();
 

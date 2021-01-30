@@ -19,17 +19,18 @@ import java.util.ArrayList;
 
 public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.viewHolder> {
 
-    ArrayList<String> videoTitle, channelName, timeStamps, links;
+    ArrayList<String> videoTitle, channelName, timeStamps, links, descriptions;
     ArrayList<Bitmap> thumbNail;
     Context context;
 
-    public VideoCardAdapter(Context ct, ArrayList<String> vT, ArrayList<String> cN, ArrayList<String> tS, ArrayList<Bitmap> tbNail, ArrayList<String> lk){
+    public VideoCardAdapter(Context ct, ArrayList<String> vT, ArrayList<String> cN, ArrayList<String> tS, ArrayList<Bitmap> tbNail, ArrayList<String> lk, ArrayList<String> desc){
         context = ct;
         videoTitle = vT;
         channelName = cN;
         timeStamps = tS;
         thumbNail = tbNail;
         links = lk;
+        descriptions = desc;
     }
 
     @NonNull
