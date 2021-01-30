@@ -3,6 +3,7 @@ package com.example.notestube;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +23,7 @@ public class VideoPlayer extends YouTubeBaseActivity {
 
     TextView titleTV, timeTV, channelTV, descriptionTV;
     ImageView dropDown;
-    String title, time, channel, description = "aaaaa\naaaaaaa\naaaaaaaa\naaaaaaaa";
+    String title, time, channel, description,videoId;
     Boolean descExpanded = false;
 
     LinearLayout.LayoutParams params;
@@ -31,6 +32,16 @@ public class VideoPlayer extends YouTubeBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
+
+        Intent intent=getIntent();
+        VideoInfo videoInfo=(VideoInfo)intent.getSerializableExtra("videoInfo");
+        assert videoInfo != null;
+        title=videoInfo.title;
+        time=videoInfo.time;
+        channel=videoInfo.channel;
+        description=videoInfo.description;
+        videoId=videoInfo.videoId;
+
         mYoutubePlayerView=findViewById(R.id.youtubeplay);
         titleTV = findViewById(R.id.videoPlayerTitle);
         timeTV = findViewById(R.id.videoPlayerTime);
@@ -43,7 +54,7 @@ public class VideoPlayer extends YouTubeBaseActivity {
         onInitializedListener=new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-            youTubePlayer.loadVideo("1_iUFT3nWHk");
+            youTubePlayer.loadVideo(videoId);
             }
 
             @Override
@@ -68,12 +79,13 @@ public class VideoPlayer extends YouTubeBaseActivity {
                 }
             }
         });
-
-        mYoutubePlayerView.initialize("AIzaSyA0epWMVtHlvhZF2WsApIUFr_D0dFU_IY4",onInitializedListener);
-        title = "TITLE";
-        time = "TIME";
-        channel = "CHANNEL";
         initializeTextView();
+        System.out.println(videoId);
+        mYoutubePlayerView.initialize("AIzaSyA0epWMVtHlvhZF2WsApIUFr_D0dFU_IY4",onInitializedListener);
+//        title = "TITLE";
+//        time = "TIME";
+//        channel = "CHANNEL";
+
     }
 
     private void initializeTextView(){
