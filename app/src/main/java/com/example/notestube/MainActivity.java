@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     private void openHome(){
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q="+
                 "mann mast magan"+
-                "&type=video&key=AIzaSyAKqsBfJa1xl1c265-Db7KNycAP1GeaZ-M";
+                "&type=video&key=AIzaSyA0epWMVtHlvhZF2WsApIUFr_D0dFU_IY4";
 
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         assert mgr != null;
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 searchView.clearFocus();
                 String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q="+
                         query+
-                        "&type=video&key=AIzaSyAKqsBfJa1xl1c265-Db7KNycAP1GeaZ-M";
+                        "&type=video&key=AIzaSyA0epWMVtHlvhZF2WsApIUFr_D0dFU_IY4";
 
                 InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 assert mgr != null;
