@@ -19,16 +19,17 @@ import java.util.Objects;
 
 public class Dashboard extends Fragment {
 
-    ArrayList<String> videoTitle, channelName, timeStamps;
+    ArrayList<String> videoTitle, channelName, timeStamps, links;
     ArrayList<Bitmap> thumbNail;
 
     RecyclerView recyclerView;
 
-    public Dashboard(ArrayList<String> vT, ArrayList<String> cN, ArrayList<String> tS, ArrayList<Bitmap> tbNail) {
+    public Dashboard(ArrayList<String> vT, ArrayList<String> cN, ArrayList<String> tS, ArrayList<Bitmap> tbNail, ArrayList<String> lk) {
         videoTitle = vT;
         channelName = cN;
         timeStamps = tS;
         thumbNail = tbNail;
+        links = lk;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class Dashboard extends Fragment {
     }
 
     public void createLayout(){
-        VideoCardAdapter myAdapter = new VideoCardAdapter(getActivity(), videoTitle, channelName, timeStamps, thumbNail);
+        VideoCardAdapter myAdapter = new VideoCardAdapter(getActivity(), videoTitle, channelName, timeStamps, thumbNail, links);
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
