@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                        break;
                    default:
                        selectedFragment = new Dashboard(titles, channels, times, thumbs);
-                       changeView();
+                       openHome();
                        fragID = 1;
                        break;
                }
@@ -130,10 +130,10 @@ public class MainActivity extends AppCompatActivity {
        });
 
         mAuth=FirebaseAuth.getInstance();
-        changeView();
+        openHome();
     }
 
-    private void changeView(){
+    private void openHome(){
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q="+
                 "mann mast magan"+
                 "&type=video&key=AIzaSyAKqsBfJa1xl1c265-Db7KNycAP1GeaZ-M";
