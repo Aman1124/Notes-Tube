@@ -52,7 +52,9 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.view
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, links.get(position), Toast.LENGTH_SHORT).show();
+                VideoInfo videoInfo=new VideoInfo(links.get(position),videoTitle.get(position),descriptions.get(position),timeStamps.get(position),channelName.get(position));
                 Intent intent=new Intent(context,VideoPlayer.class);
+                intent.putExtra("videoInfo",videoInfo);
                 context.startActivity(intent);
             }
         });

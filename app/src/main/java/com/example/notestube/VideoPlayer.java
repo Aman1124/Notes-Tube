@@ -3,6 +3,8 @@ package com.example.notestube;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+
+import android.content.Intent;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,8 +34,9 @@ public class VideoPlayer extends YouTubeBaseActivity {
 
     TextView titleTV, timeTV, channelTV, descriptionTV;
     ImageView dropDown;
+
+    String title, time, channel, description,videoId;
     EditText editText;
-    String title, time, channel, videoId, description = "aaaaa\naaaaaaa\naaaaaaaa\naaaaaaaa";
     Boolean descExpanded = false;
     Boolean editNote = false;
 
@@ -47,6 +50,16 @@ public class VideoPlayer extends YouTubeBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
+
+        Intent intent=getIntent();
+        VideoInfo videoInfo=(VideoInfo)intent.getSerializableExtra("videoInfo");
+        assert videoInfo != null;
+        title=videoInfo.title;
+        time=videoInfo.time;
+        channel=videoInfo.channel;
+        description=videoInfo.description;
+        videoId=videoInfo.videoId;
+
         mYoutubePlayerView=findViewById(R.id.youtubeplay);
         titleTV = findViewById(R.id.videoPlayerTitle);
         timeTV = findViewById(R.id.videoPlayerTime);
@@ -58,12 +71,11 @@ public class VideoPlayer extends YouTubeBaseActivity {
         mainLayout = findViewById(R.id.videoPlayerMainLayout);
 
         params = (LinearLayout.LayoutParams) descriptionTV.getLayoutParams();
-        videoId = "1_iUFT3nWHk";
 
         onInitializedListener=new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-            youTubePlayer.loadVideo("1_iUFT3nWHk");
+            youTubePlayer.loadVideo(videoId);
             }
 
             @Override
@@ -129,10 +141,14 @@ public class VideoPlayer extends YouTubeBaseActivity {
         loadNote(videoId);
 
         mYoutubePlayerView.initialize("AIzaSyA0epWMVtHlvhZF2WsApIUFr_D0dFU_IY4",onInitializedListener);
-        title = "TITLE";
-        time = "TIME";
-        channel = "CHANNEL";
+        
         initializeTextView();
+        System.out.println(videoId);
+        mYoutubePlayerView.initialize("AIzaSyA0epWMVtHlvhZF2WsApIUFr_D0dFU_IY4",onInitializedListener);
+//        title = "TITLE";
+//        time = "TIME";
+//        channel = "CHANNEL";
+
     }
 
     private void initializeTextView(){
