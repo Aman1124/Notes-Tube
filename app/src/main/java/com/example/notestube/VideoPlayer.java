@@ -1,5 +1,6 @@
 package com.example.notestube;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -18,14 +19,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class VideoPlayer extends YouTubeBaseActivity {
 
@@ -34,6 +43,7 @@ public class VideoPlayer extends YouTubeBaseActivity {
 
     TextView titleTV, timeTV, channelTV, descriptionTV;
     ImageView dropDown;
+    FirebaseFirestore db;
 
     String title, time, channel, description,videoId;
     EditText editText;
@@ -72,6 +82,31 @@ public class VideoPlayer extends YouTubeBaseActivity {
         channel=videoInfo.channel;
         description=videoInfo.description;
         videoId=videoInfo.videoId;
+
+        db=FirebaseFirestore.getInstance();
+
+        Map<String,String> history=new HashMap<>();
+        history.put("title",title);
+        history.put("channel",channel);
+        history.put("description",description);
+        history.put("videoId",videoId);
+        history.put("time",time);
+//        history.put("thumbnail",thumbnail);
+
+        db.collection("videos").add(history).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if(task.isSuccessful())
+                {
+                    Toast.makeText(VideoPlayer.this, "History Uploaded", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(VideoPlayer.this, "Upload Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         mYoutubePlayerView=findViewById(R.id.youtubeplay);
         titleTV = findViewById(R.id.videoPlayerTitle);
