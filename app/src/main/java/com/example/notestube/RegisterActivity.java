@@ -44,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         Intent intent = getIntent();
@@ -84,6 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
                         {
                             Toast.makeText(RegisterActivity.this, "User Created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            finish();
                         }
                         else
                         {
