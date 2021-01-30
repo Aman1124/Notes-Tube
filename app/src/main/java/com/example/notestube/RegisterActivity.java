@@ -3,12 +3,16 @@ package com.example.notestube;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,9 +27,17 @@ import java.util.Objects;
 public class RegisterActivity extends AppCompatActivity {
 
     EditText mName,mEmail,mPassword,mConfirmPassword;
+    ImageView ellipse3, ellipse4, welcomeIV, waveHeader;
+    TextView welcomeTV;
     Button mSignUp,mSignIn;
     FirebaseAuth mAuth;
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAndRemoveTask();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +50,21 @@ public class RegisterActivity extends AppCompatActivity {
         mPassword=findViewById(R.id.regPwdEditText);
         mConfirmPassword=findViewById(R.id.regConfPwdEditText);
         mSignUp=findViewById(R.id.regSignUpButton);
+        ellipse3 = findViewById(R.id.regEllipse3);
+        ellipse4 = findViewById(R.id.regEllipse4);
+        welcomeIV = findViewById(R.id.reg_welcome_IV);
+        waveHeader = findViewById(R.id.regWave_header);
+        welcomeTV = findViewById(R.id.reg_welcomeTV);
 
         mSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
                 finish();
             }
         });
@@ -52,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(mAuth.getCurrentUser()!=null)
         {
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
         }
