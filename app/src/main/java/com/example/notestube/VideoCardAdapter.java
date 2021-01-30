@@ -1,6 +1,7 @@
 package com.example.notestube;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.icu.text.UnicodeSetSpanner;
 import android.view.LayoutInflater;
@@ -50,6 +51,8 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.view
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, links.get(position), Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(context,VideoPlayer.class);
+                context.startActivity(intent);
             }
         });
     }
