@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,9 +19,58 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
+
+    String[] title = new String[]{"Abc", "Xyz"};
+    String[] channel = new String[]{"123", "789"};
+    String[] time = new String[]{"1 min ago", "10 min ago"};
+    Bitmap[] img = new Bitmap[]{
+            getImageBitmap("https://i.ytimg.com/vi/xr3EMr_hrfA/mqdefault.jpg"),
+            getImageBitmap("https://i.ytimg.com/vi/z6HLeNl8DOs/hqdefault.jpg")};
+
+    public static class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+
+            try {
+
+                URL url = new URL(urls[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream inputStream = connection.getInputStream();
+
+                Bitmap myBitmap = BitmapFactory.decodeStream(inputStream);
+
+                return myBitmap;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    public Bitmap getImageBitmap(String url){
+        ImageDownloader imageTask = new ImageDownloader();
+        Bitmap imgBitmap = null;
+
+        try {
+            imgBitmap = imageTask.execute(url).get();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return imgBitmap;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
-                new Dashboard()).commit();
+                new Dashboard(title, channel, time, img)).commit();
 
        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
            @Override
@@ -44,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                        selectedFragment = new History();
                        break;
                    default:
-                       selectedFragment = new Dashboard();
+                       selectedFragment = new Dashboard(title, channel, time, img);
                        break;
                }
                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
