@@ -150,7 +150,7 @@ public class VideoPlayer extends YouTubeBaseActivity {
         });
 
         database = this.openOrCreateDatabase("Notes", MODE_PRIVATE, null);
-        database.execSQL("CREATE TABLE IF NOT EXISTS notes ( id VARCHAR(25), data TEXT )");
+        database.execSQL("CREATE TABLE IF NOT EXISTS notes ( id VARCHAR(25), title TEXT, data TEXT )");
         loadNote(videoId);
 
         mYoutubePlayerView.initialize("AIzaSyA0epWMVtHlvhZF2WsApIUFr_D0dFU_IY4",onInitializedListener);
@@ -178,9 +178,9 @@ public class VideoPlayer extends YouTubeBaseActivity {
             database.execSQL("DELETE FROM notes WHERE id = \"" + videoId + "\"");
         }
         assert c != null;
-        database.execSQL("INSERT INTO notes (id, data) VALUES (" +
-                String.format(Locale.US, "\"%s\", \"%s\")",
-                        videoId, note));
+        database.execSQL("INSERT INTO notes (id, title, data) VALUES (" +
+                String.format(Locale.US, "\"%s\", \"%s\", \"%s\")",
+                        videoId, title, note));
         c.close();
     }
 
