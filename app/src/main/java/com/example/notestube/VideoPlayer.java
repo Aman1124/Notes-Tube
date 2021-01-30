@@ -47,6 +47,19 @@ public class VideoPlayer extends YouTubeBaseActivity {
     ConstraintLayout layout, mainLayout;
 
     @Override
+    public void onBackPressed() {
+        if(editNote){
+            editNote = false;
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            assert imm != null;
+            imm.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0);
+            layout.setVisibility(View.INVISIBLE);
+            saveNote();
+        } else
+            super.onBackPressed();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
