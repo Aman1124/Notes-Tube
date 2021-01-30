@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
+    ArrayList<String> youtubeLinks,thumbnails,titles,descriptions,channels,times;
+    ArrayList<Bitmap> thumbs;
+
     String[] title = new String[]{"Abc", "Xyz", "Pqr"};
     String[] channel = new String[]{"123", "789", "098"};
     String[] time = new String[]{"1 min ago", "10 min ago", "7 days ago"};
@@ -100,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
-                new Dashboard(title, channel, time, img)).commit();
 
        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
            @Override
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                        selectedFragment = new History(title, channel, img);
                        break;
                    default:
-                       selectedFragment = new Dashboard(title, channel, time, img);
+                       selectedFragment = new Dashboard(titles, channels, times, thumbs);
                        break;
                }
                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
        });
 
         mAuth=FirebaseAuth.getInstance();
-        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=amazon-gods&type=video&key=AIzaSyAKqsBfJa1xl1c265-Db7KNycAP1GeaZ-M";
+        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=mann-mast-magan&type=video&key=AIzaSyAKqsBfJa1xl1c265-Db7KNycAP1GeaZ-M";
 
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         assert mgr != null;
@@ -166,9 +167,10 @@ public class MainActivity extends AppCompatActivity {
         SearchView.OnQueryTextListener queryTextListener=new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, "Searching...", Toast.LENGTH_SHORT).show();
                 searchView.clearFocus();
-                String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=amazon-gods&type=video&key=AIzaSyAKqsBfJa1xl1c265-Db7KNycAP1GeaZ-M";
+                String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q="+
+                        query+
+                        "&type=video&key=AIzaSyAKqsBfJa1xl1c265-Db7KNycAP1GeaZ-M";
 
                 InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 assert mgr != null;
@@ -180,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e){
                     Toast.makeText(getApplicationContext(),"Unable to find weather!",Toast.LENGTH_LONG).show();
                 }
+
                 return true;
             }
 
@@ -193,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public static class DownloadTask extends AsyncTask<String,Void,String>{
+    public class DownloadTask extends AsyncTask<String,Void,String>{
 
         @Override
         protected String doInBackground(String... urls) {
@@ -214,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 result = total.toString();
-                Log.i("DATA: ",result);
                 return result;
             }
             catch(Exception e){
@@ -228,13 +230,13 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            ArrayList<String> youtubeLinks,thumbnails,titles,descriptions,channels,time;
             youtubeLinks=new ArrayList<String>();
             titles=new ArrayList<String>();
             descriptions=new ArrayList<String>();
             channels=new ArrayList<String>();
-            time=new ArrayList<String>();
+            times=new ArrayList<String>();
             thumbnails=new ArrayList<String>();
+            thumbs = new ArrayList<Bitmap>();
 
             try {
                 JSONObject jsonObject=new JSONObject(s);
@@ -271,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
 
 //                    Getting Upload date
                     String publishTime=snippetObject.getString("publishedAt");
-                    time.add(publishTime);
+                    times.add(publishTime);
                     System.out.println(publishTime);
 
 //                    Getting Thumbnail
@@ -282,12 +284,18 @@ public class MainActivity extends AppCompatActivity {
                     String thumbnail=thumbnailLink.getString("url");
                     thumbnails.add(thumbnail);
                     System.out.println(thumbnail);
-
                 }
+
+                for(int i=0;i<thumbnails.size();i++)
+                    thumbs.add(getImageBitmap(thumbnails.get(i)));
+
                 for(int i=0;i<youtubeLinks.size();i++)
                 {
                     System.out.println(youtubeLinks.get(i)+" "+titles.get(i));
                 }
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
+                        new Dashboard(titles, channels, times, thumbs)).commit();
 
             } catch (Exception e) {
                 e.printStackTrace();

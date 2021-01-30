@@ -11,14 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 
 public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.viewHolder> {
 
-    String[] videoTitle, channelName, timeStamps;
-    Bitmap[] thumbNail;
+    ArrayList<String> videoTitle, channelName, timeStamps;
+    ArrayList<Bitmap> thumbNail;
     Context context;
 
-    public VideoCardAdapter(Context ct, String[] vT, String[] cN, String[] tS, Bitmap[] tbNail){
+    public VideoCardAdapter(Context ct, ArrayList<String> vT, ArrayList<String> cN, ArrayList<String> tS, ArrayList<Bitmap> tbNail){
         context = ct;
         videoTitle = vT;
         channelName = cN;
@@ -36,15 +38,15 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.view
 
     @Override
     public void onBindViewHolder(@NonNull VideoCardAdapter.viewHolder holder, int position) {
-        holder.videoTitle.setText(videoTitle[position]);
-        holder.channelName.setText(channelName[position]);
-        holder.timeStamp.setText(timeStamps[position]);
-        holder.thumbnail.setImageBitmap(thumbNail[position]);
+        holder.videoTitle.setText(videoTitle.get(position));
+        holder.channelName.setText(channelName.get(position));
+        holder.timeStamp.setText(timeStamps.get(position));
+        holder.thumbnail.setImageBitmap(thumbNail.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return videoTitle.length;
+        return videoTitle.size();
     }
 
     public static class viewHolder extends RecyclerView.ViewHolder {

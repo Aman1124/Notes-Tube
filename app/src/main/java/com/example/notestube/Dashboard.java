@@ -13,17 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 
 public class Dashboard extends Fragment {
 
-    String[] videoTitle, channelName, timeStamps;
-    Bitmap[] thumbNail;
+    ArrayList<String> videoTitle, channelName, timeStamps;
+    ArrayList<Bitmap> thumbNail;
 
     RecyclerView recyclerView;
 
-    public Dashboard(String[] vT, String[] cN, String[] tS, Bitmap[] tbNail) {
+    public Dashboard(ArrayList<String> vT, ArrayList<String> cN, ArrayList<String> tS, ArrayList<Bitmap> tbNail) {
         videoTitle = vT;
         channelName = cN;
         timeStamps = tS;
