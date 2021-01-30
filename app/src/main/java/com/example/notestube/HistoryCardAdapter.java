@@ -11,34 +11,31 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+public class HistoryCardAdapter extends RecyclerView.Adapter<HistoryCardAdapter.viewHolder> {
 
-public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.viewHolder> {
-
-    String[] videoTitle, channelName, timeStamps;
+    String[] videoTitle, channelName;
     Bitmap[] thumbNail;
     Context context;
 
-    public VideoCardAdapter(Context ct, String[] vT, String[] cN, String[] tS, Bitmap[] tbNail){
+    public HistoryCardAdapter(Context ct, String[] vT, String[] cN, Bitmap[] tbNail){
         context = ct;
         videoTitle = vT;
         channelName = cN;
-        timeStamps = tS;
         thumbNail = tbNail;
     }
 
     @NonNull
     @Override
-    public VideoCardAdapter.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HistoryCardAdapter.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.video_card, parent, false);
+        View view = inflater.inflate(R.layout.history_card, parent, false);
         return new viewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VideoCardAdapter.viewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HistoryCardAdapter.viewHolder holder, int position) {
         holder.videoTitle.setText(videoTitle[position]);
         holder.channelName.setText(channelName[position]);
-        holder.timeStamp.setText(timeStamps[position]);
         holder.thumbnail.setImageBitmap(thumbNail[position]);
     }
 
@@ -49,15 +46,14 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.view
 
     public static class viewHolder extends RecyclerView.ViewHolder {
 
-        TextView videoTitle, channelName, timeStamp;
+        TextView videoTitle, channelName;
         ImageView thumbnail;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
-            videoTitle = itemView.findViewById(R.id.cardVideoTitle);
-            channelName = itemView.findViewById(R.id.cardChannelName);
-            timeStamp = itemView.findViewById(R.id.cardTimeDisplay);
-            thumbnail = itemView.findViewById(R.id.cardThumbnail);
+            videoTitle = itemView.findViewById(R.id.historyCardVideoTitle);
+            channelName = itemView.findViewById(R.id.historyCardChannelName);
+            thumbnail = itemView.findViewById(R.id.historyCardThumbnail);
         }
     }
 }

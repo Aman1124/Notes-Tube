@@ -29,12 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
-    String[] title = new String[]{"Abc", "Xyz"};
-    String[] channel = new String[]{"123", "789"};
-    String[] time = new String[]{"1 min ago", "10 min ago"};
+    String[] title = new String[]{"Abc", "Xyz", "Pqr"};
+    String[] channel = new String[]{"123", "789", "098"};
+    String[] time = new String[]{"1 min ago", "10 min ago", "7 days ago"};
     Bitmap[] img = new Bitmap[]{
             getImageBitmap("https://i.ytimg.com/vi/xr3EMr_hrfA/mqdefault.jpg"),
-            getImageBitmap("https://i.ytimg.com/vi/z6HLeNl8DOs/hqdefault.jpg")};
+            getImageBitmap("https://i.ytimg.com/vi/z6HLeNl8DOs/hqdefault.jpg"),
+            getImageBitmap("https://i.ytimg.com/vi/Zo9svgiRSeM/hqdefault.jpg")};
 
     public static class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                        selectedFragment = new Notes();
                        break;
                    case R.id.nav_history:
-                       selectedFragment = new History();
+                       selectedFragment = new History(title, channel, img);
                        break;
                    default:
                        selectedFragment = new Dashboard(title, channel, time, img);
