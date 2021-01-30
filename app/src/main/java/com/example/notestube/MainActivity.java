@@ -1,5 +1,6 @@
 package com.example.notestube;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
@@ -9,7 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +24,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
+                new Dashboard()).commit();
+
+       bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+           @Override
+           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+               Fragment selectedFragment;
+               switch (item.getItemId()){
+                   case R.id.nav_notes:
+                       selectedFragment = new Notes();
+                       break;
+                   case R.id.nav_history:
+                       selectedFragment = new History();
+                       break;
+                   default:
+                       selectedFragment = new Dashboard();
+                       break;
+               }
+               getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
+                       selectedFragment).commit();
+               return true;
+           }
+       });
 
         mAuth=FirebaseAuth.getInstance();
     }
