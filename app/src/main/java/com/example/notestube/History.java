@@ -77,9 +77,8 @@ public class History extends Fragment {
         });
 
 
-        if (historyList.isEmpty()) {
-            Toast.makeText(getContext(), "Empty List", Toast.LENGTH_SHORT).show();
-        }
+//        if (historyList.isEmpty())
+//            Toast.makeText(getContext(), "Empty List", Toast.LENGTH_SHORT).show();
 //    else
 //        System.out.println(videoTitle1.get(0));
     }

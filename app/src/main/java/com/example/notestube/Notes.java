@@ -1,5 +1,7 @@
 package com.example.notestube;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -67,6 +69,28 @@ public class Notes extends Fragment {
                 Intent intent = new Intent(requireContext(), NoteDisplay.class);
                 intent.putExtra("videoID", videoIDs.get(position));
                 startActivity(intent);
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final int itemToDelete = position;
+                new AlertDialog.Builder(requireContext())
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Are you sure?")
+                        .setMessage("Delete this note?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                notesHeading.remove(itemToDelete);
+                                arrayAdapter.notifyDataSetChanged();
+                                database.execSQL("DELETE FROM notes WHERE id = \"" + videoIDs.get(itemToDelete) + "\"");
+                            }
+                        }).setNegativeButton("No", null)
+                        .show();
+
+                return true;
             }
         });
     }
