@@ -14,4 +14,9 @@ public class VideoInfo implements Serializable {
         this.time=time;
         this.channel=channel;
     }
+    public VideoInfo()
+    {
+
+    }
+
 }

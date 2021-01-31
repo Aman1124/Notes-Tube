@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                        selectedFragment = new Notes();
                        break;
                    case R.id.nav_history:
-                       selectedFragment = new History(title, channel, img);
+                       selectedFragment = new History(img);
                        break;
                    default:
                        //Toast.makeText(MainActivity.this, "FragID = " + fragID, Toast.LENGTH_SHORT).show();
