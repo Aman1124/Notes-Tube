@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -25,6 +27,7 @@ public class HistoryCardAdapter extends RecyclerView.Adapter<HistoryCardAdapter.
     String[] videoTitle, channelName, videoID, description, time;
     String[] thumbNail;
     Context context;
+    FirebaseAuth mAuth;
 
     public HistoryCardAdapter(Context ct,String[] id, String[] vT, String[] cN, String[] tbNail, String[] desc, String[] t){
         context = ct;
@@ -57,8 +60,10 @@ public class HistoryCardAdapter extends RecyclerView.Adapter<HistoryCardAdapter.
             @Override
             public void onClick(View v) {
                 //Toast.makeText(context, links.get(position), Toast.LENGTH_SHORT).show();
+                mAuth=FirebaseAuth.getInstance();
+                String userid = mAuth.getUid();
                 VideoInfo videoInfo=new VideoInfo(videoID[position], videoTitle[position],
-                        description[position], time[position], channelName[position]);
+                        description[position], time[position], channelName[position], thumbNail[position], userid);
 
                 Intent intent=new Intent(context,VideoPlayer.class);
                 intent.putExtra("videoInfo",videoInfo);

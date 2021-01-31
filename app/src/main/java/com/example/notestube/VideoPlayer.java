@@ -41,7 +41,7 @@ public class VideoPlayer extends YouTubeBaseActivity {
     YouTubePlayerView mYoutubePlayerView;
     YouTubePlayer.OnInitializedListener onInitializedListener;
 
-    TextView titleTV, timeTV, channelTV, descriptionTV;
+    TextView titleTV, timeTV, channelTV, descriptionTV, notesDisplay;
     ImageView dropDown;
     FirebaseFirestore db;
 
@@ -82,6 +82,7 @@ public class VideoPlayer extends YouTubeBaseActivity {
         description=videoInfo.description;
         videoId=videoInfo.videoId;
         thumbnail=videoInfo.thumbnail;
+        notesDisplay = findViewById(R.id.vpNoteDisplay);
         userid=FirebaseAuth.getInstance().getUid();
 
         db=FirebaseFirestore.getInstance();
@@ -188,6 +189,7 @@ public class VideoPlayer extends YouTubeBaseActivity {
         database = this.openOrCreateDatabase("Notes", MODE_PRIVATE, null);
         database.execSQL("CREATE TABLE IF NOT EXISTS notes ( id VARCHAR(25), title TEXT, data TEXT )");
         loadNote(videoId);
+        notesDisplay.setText(note);
 
         mYoutubePlayerView.initialize("AIzaSyA0epWMVtHlvhZF2WsApIUFr_D0dFU_IY4",onInitializedListener);
         
@@ -217,6 +219,7 @@ public class VideoPlayer extends YouTubeBaseActivity {
         database.execSQL("INSERT INTO notes (id, title, data) VALUES (" +
                 String.format(Locale.US, "\"%s\", \"%s\", \"%s\")",
                         videoId, title, note));
+        notesDisplay.setText(note);
         c.close();
     }
 

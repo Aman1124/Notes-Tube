@@ -133,8 +133,8 @@ public class MainActivity extends AppCompatActivity {
     private void openHome(){
         if(fragID != 1) {
             Toast.makeText(MainActivity.this, "Opening Home", Toast.LENGTH_SHORT).show();
-            String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q=" +
-                    "mann mast magan" +
+            String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=40&q=" +
+                    "tutorial android java flutter python" +
                     "&type=video&key=" + apiKey;
 
             InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

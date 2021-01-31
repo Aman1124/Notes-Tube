@@ -14,7 +14,7 @@ public class VideoInfo implements Serializable {
     public String thumbnail;
     public String userid;
 
-    public VideoInfo(String videoId, String title, String description, String time, String channel,String thumbnail,String userid) {
+    public VideoInfo(String videoId, String title, String description, String time, String channel,String thumbnail, String userid) {
         this.videoId = videoId;
         this.title = title;
         this.description = description;
