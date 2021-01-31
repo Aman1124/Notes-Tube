@@ -28,11 +28,10 @@ import java.util.ArrayList;
 
 public class History extends Fragment {
 
-    String[] videoTitle, channelName, thumbNail;
+    String[] videoTitle, channelName, thumbNail, videoID, description, time;
     FirebaseFirestore firestore;
     ArrayList<VideoInfo> historyList;
-    ArrayList<String> videoTitle1, channelName1;
-    int i;
+    ArrayList<String> videoTitle1, channelName1, videoID1, desc1, time1;
 
     RecyclerView recyclerView;
 
@@ -47,6 +46,9 @@ public class History extends Fragment {
         historyList = new ArrayList<VideoInfo>();
         videoTitle1 = new ArrayList<String>();
         channelName1 = new ArrayList<String>();
+        videoID1 = new ArrayList<String>();
+        desc1 = new ArrayList<String>();
+        time1 = new ArrayList<String>();
 
         Query firstQuery = firestore.collection("videos");
         firstQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -64,6 +66,9 @@ public class History extends Fragment {
                             historyList.add(videoInfo);
                             videoTitle1.add(videoInfo.title);
                             channelName1.add(videoInfo.channel);
+                            videoID1.add(videoInfo.videoId);
+                            desc1.add(videoInfo.description);
+                            time1.add(videoInfo.time);
 
                             Log.i("videoTitle", "inside:" + String.valueOf(videoTitle1));
                         }
@@ -71,6 +76,9 @@ public class History extends Fragment {
 
                     videoTitle = videoTitle1.toArray(new String[0]);
                     channelName = channelName1.toArray(new String[0]);
+                    videoID = videoID1.toArray(new String[0]);
+                    description = desc1.toArray(new String[0]);
+                    time = time1.toArray(new String[0]);
                     createLayout();
                 }
             }
@@ -100,7 +108,7 @@ public class History extends Fragment {
     }
 
     public void createLayout() {
-        HistoryCardAdapter myAdapter = new HistoryCardAdapter(getActivity(), videoTitle, channelName, thumbNail);
+        HistoryCardAdapter myAdapter = new HistoryCardAdapter(getActivity(),videoID, videoTitle, channelName, thumbNail, description, time);
         Log.i("HISTORY", String.valueOf(myAdapter.getItemCount()));
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
