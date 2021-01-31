@@ -48,6 +48,9 @@ public class HistoryCardAdapter extends RecyclerView.Adapter<HistoryCardAdapter.
     public void onBindViewHolder(@NonNull HistoryCardAdapter.viewHolder holder, final int position) {
         holder.videoTitle.setText(videoTitle[position]);
         holder.channelName.setText(channelName[position]);
+
+        holder.thumbnail.setImageBitmap(getImageBitmap(thumbNail[position]));
+
         //holder.thumbnail.setImageBitmap(getImageBitmap(thumbNail[position]));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
