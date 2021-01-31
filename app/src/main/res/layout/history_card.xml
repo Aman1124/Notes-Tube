@@ -36,10 +36,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/segoe_ui"
+                    android:minLines="3"
                     android:maxLines="3"
-                    android:paddingEnd="20dp"
+                    android:paddingEnd="5dp"
+                    android:paddingBottom="10dp"
                     android:text="Video Title"
-                    android:textSize="20sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#202020"/>
 
 
                 <TextView
@@ -47,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Channel"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 

@@ -18,11 +18,11 @@ import java.util.ArrayList;
 public class SearchFragment extends Fragment {
 
     ArrayList<String> videoTitle, channelName, timeStamps, links, desc;
-    ArrayList<Bitmap> thumbNail;
+    ArrayList<String> thumbNail;
 
     RecyclerView recyclerView;
 
-    public SearchFragment(ArrayList<String> vT, ArrayList<String> cN, ArrayList<String> tS, ArrayList<Bitmap> tbNail, ArrayList<String> lk, ArrayList<String> des) {
+    public SearchFragment(ArrayList<String> vT, ArrayList<String> cN, ArrayList<String> tS, ArrayList<String> tbNail, ArrayList<String> lk, ArrayList<String> des) {
         videoTitle = vT;
         channelName = cN;
         timeStamps = tS;

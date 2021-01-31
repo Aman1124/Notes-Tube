@@ -3,7 +3,9 @@ package com.example.notestube;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.icu.text.UnicodeSetSpanner;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +16,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 
 public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.viewHolder> {
 
     ArrayList<String> videoTitle, channelName, timeStamps, links, descriptions;
-    ArrayList<Bitmap> thumbNail;
+    ArrayList<String> thumbNail;
     Context context;
 
-    public VideoCardAdapter(Context ct, ArrayList<String> vT, ArrayList<String> cN, ArrayList<String> tS, ArrayList<Bitmap> tbNail, ArrayList<String> lk, ArrayList<String> desc){
+    public VideoCardAdapter(Context ct, ArrayList<String> vT, ArrayList<String> cN, ArrayList<String> tS,
+                            ArrayList<String> tbNail, ArrayList<String> lk, ArrayList<String> desc){
         context = ct;
         videoTitle = vT;
         channelName = cN;
@@ -46,7 +53,7 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.view
         holder.videoTitle.setText(videoTitle.get(position));
         holder.channelName.setText(channelName.get(position));
         holder.timeStamp.setText(timeStamps.get(position));
-        holder.thumbnail.setImageBitmap(thumbNail.get(position));
+        holder.thumbnail.setImageBitmap(getImageBitmap(thumbNail.get(position)));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,5 +92,41 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.view
         public void onClick(View v) {
 
         }
+    }
+
+    public static class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+
+            try {
+
+                URL url = new URL(urls[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream inputStream = connection.getInputStream();
+
+                Bitmap myBitmap = BitmapFactory.decodeStream(inputStream);
+
+                return myBitmap;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    public Bitmap getImageBitmap(String url){
+        VideoCardAdapter.ImageDownloader imageTask = new VideoCardAdapter.ImageDownloader();
+        Bitmap imgBitmap = null;
+
+        try {
+            imgBitmap = imageTask.execute(url).get();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return imgBitmap;
     }
 }

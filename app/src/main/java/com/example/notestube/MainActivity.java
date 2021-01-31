@@ -48,18 +48,10 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
 
     ArrayList<String> youtubeLinks,thumbnails,titles,descriptions,channels,times;
-    ArrayList<Bitmap> thumbs;
 
     int fragID = 2;
     String apiKey = "AIzaSyDmsn8t4HW_VeyGp8m8IgFJkzxtDCJ0Qy8";
 
-    String[] title = new String[]{"Abc", "Xyz", "Pqr"};
-    String[] channel = new String[]{"123", "789", "098"};
-    String[] time = new String[]{"1 min ago", "10 min ago", "7 days ago"};
-    Bitmap[] img = new Bitmap[]{
-            getImageBitmap("https://i.ytimg.com/vi/xr3EMr_hrfA/mqdefault.jpg"),
-            getImageBitmap("https://i.ytimg.com/vi/z6HLeNl8DOs/hqdefault.jpg"),
-            getImageBitmap("https://i.ytimg.com/vi/Zo9svgiRSeM/hqdefault.jpg")};
 
     public static class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
@@ -116,11 +108,10 @@ public class MainActivity extends AppCompatActivity {
                        selectedFragment = new Notes();
                        break;
                    case R.id.nav_history:
-                       selectedFragment = new History(img);
+                       selectedFragment = new History();
                        break;
                    default:
-                       //Toast.makeText(MainActivity.this, "FragID = " + fragID, Toast.LENGTH_SHORT).show();
-                       selectedFragment = new Dashboard(titles, channels, times, thumbs, youtubeLinks, descriptions);
+                       selectedFragment = new Dashboard(titles, channels, times, thumbnails, youtubeLinks, descriptions);
                        fragID = 1;
                        openHome();
                        break;
@@ -137,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void openHome(){
         if(fragID != 1) {
+            Toast.makeText(MainActivity.this, "Opening Home", Toast.LENGTH_SHORT).show();
             String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q=" +
                     "mann mast magan" +
                     "&type=video&key=" + apiKey;
@@ -251,7 +243,6 @@ public class MainActivity extends AppCompatActivity {
             channels=new ArrayList<String>();
             times=new ArrayList<String>();
             thumbnails=new ArrayList<String>();
-            thumbs = new ArrayList<Bitmap>();
 
             try {
                 JSONObject jsonObject=new JSONObject(s);
@@ -301,9 +292,6 @@ public class MainActivity extends AppCompatActivity {
                     System.out.println(thumbnail);
                 }
 
-                for(int i=0;i<thumbnails.size();i++)
-                    thumbs.add(getImageBitmap(thumbnails.get(i)));
-
                 for(int i=0;i<youtubeLinks.size();i++)
                 {
                     System.out.println(youtubeLinks.get(i)+" "+titles.get(i));
@@ -312,12 +300,12 @@ public class MainActivity extends AppCompatActivity {
 
                 if(fragID == 1)
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
-                            new Dashboard(titles, channels, times, thumbs, youtubeLinks, descriptions)).commit();
+                            new Dashboard(titles, channels, times, thumbnails, youtubeLinks, descriptions)).commit();
                 else if(fragID == 2)
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
-                            new SearchFragment(titles, channels, times, thumbs, youtubeLinks, descriptions)).commit();
+                            new SearchFragment(titles, channels, times, thumbnails, youtubeLinks, descriptions)).commit();
 
-                //Toast.makeText(MainActivity.this, "Fetching Complete" + fragID, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Fetching Complete " + fragID, Toast.LENGTH_SHORT).show();
 
 
             } catch (Exception e) {
