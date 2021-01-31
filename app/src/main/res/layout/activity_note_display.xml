@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Notes">
+    tools:context=".NoteDisplay">
 
-
-    <ListView
-        android:id="@+id/notesListView"
+    <TextView
+        android:id="@+id/noteTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        android:fontFamily="@font/segoe_ui"
+        android:textSize="15sp"
+        android:textColor="#202020"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
