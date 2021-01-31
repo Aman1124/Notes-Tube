@@ -28,12 +28,15 @@ import java.util.ArrayList;
 
 public class History extends Fragment {
 
-    String[] videoTitle, channelName, thumbNail;
+    String[] videoTitle, channelName, thumbNail, videoID, description, time;
     FirebaseFirestore firestore;
     FirebaseAuth mAuth;
     ArrayList<VideoInfo> historyList;
-    ArrayList<String> videoTitle1, channelName1,thumbnail1;
+    
     int i;
+
+    ArrayList<String> videoTitle1, channelName1,thumbnail1, videoID1, desc1, time1;
+
 
     RecyclerView recyclerView;
 
@@ -48,9 +51,14 @@ public class History extends Fragment {
         historyList = new ArrayList<VideoInfo>();
         videoTitle1 = new ArrayList<String>();
         channelName1 = new ArrayList<String>();
+
         thumbnail1= new ArrayList<String>();
         mAuth=FirebaseAuth.getInstance();
         final String userId=mAuth.getUid();
+
+        videoID1 = new ArrayList<String>();
+        desc1 = new ArrayList<String>();
+        time1 = new ArrayList<String>();
 
         Query firstQuery = firestore.collection("videos");
         firstQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -63,6 +71,7 @@ public class History extends Fragment {
                     for (DocumentChange doc : value.getDocumentChanges()) {
                         if (doc.getType() == DocumentChange.Type.ADDED) {
                             VideoInfo videoInfo = doc.getDocument().toObject(VideoInfo.class);
+                          
                             assert userId != null;
                             System.out.println(userId);
                             System.out.println(videoInfo.userid);
@@ -72,27 +81,35 @@ public class History extends Fragment {
                                 videoTitle1.add(videoInfo.title);
                                 channelName1.add(videoInfo.channel);
                                 thumbnail1.add(videoInfo.thumbnail);
+                                videoID1.add(videoInfo.videoId);
+                                desc1.add(videoInfo.description);
+                                time1.add(videoInfo.time);
                             }
                             else
                             {
                                 System.out.println("DID NOT MATCH");
                             }
+
                             Log.i("videoTitle", "inside:" + String.valueOf(videoTitle1));
                         }
                     }
 
                     videoTitle = videoTitle1.toArray(new String[0]);
                     channelName = channelName1.toArray(new String[0]);
+
                     thumbNail= thumbnail1.toArray(new String[0]);
+
+                    videoID = videoID1.toArray(new String[0]);
+                    description = desc1.toArray(new String[0]);
+                    time = time1.toArray(new String[0]);
                     createLayout();
                 }
             }
         });
 
 
-        if (historyList.isEmpty()) {
-            Toast.makeText(getContext(), "Empty List", Toast.LENGTH_SHORT).show();
-        }
+//        if (historyList.isEmpty())
+//            Toast.makeText(getContext(), "Empty List", Toast.LENGTH_SHORT).show();
 //    else
 //        System.out.println(videoTitle1.get(0));
     }
@@ -114,7 +131,7 @@ public class History extends Fragment {
     }
 
     public void createLayout() {
-        HistoryCardAdapter myAdapter = new HistoryCardAdapter(getActivity(), videoTitle, channelName, thumbNail);
+        HistoryCardAdapter myAdapter = new HistoryCardAdapter(getActivity(),videoID, videoTitle, channelName, thumbNail, description, time);
         Log.i("HISTORY", String.valueOf(myAdapter.getItemCount()));
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -1,6 +1,7 @@
 package com.example.notestube;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,15 +22,18 @@ import java.net.URL;
 
 public class HistoryCardAdapter extends RecyclerView.Adapter<HistoryCardAdapter.viewHolder> {
 
-    String[] videoTitle, channelName;
+    String[] videoTitle, channelName, videoID, description, time;
     String[] thumbNail;
     Context context;
 
-    public HistoryCardAdapter(Context ct, String[] vT, String[] cN, String[] tbNail){
+    public HistoryCardAdapter(Context ct,String[] id, String[] vT, String[] cN, String[] tbNail, String[] desc, String[] t){
         context = ct;
         videoTitle = vT;
         channelName = cN;
         thumbNail = tbNail;
+        videoID = id;
+        description = desc;
+        time = t;
     }
 
     @NonNull
@@ -40,10 +45,26 @@ public class HistoryCardAdapter extends RecyclerView.Adapter<HistoryCardAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HistoryCardAdapter.viewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HistoryCardAdapter.viewHolder holder, final int position) {
         holder.videoTitle.setText(videoTitle[position]);
         holder.channelName.setText(channelName[position]);
+
         holder.thumbnail.setImageBitmap(getImageBitmap(thumbNail[position]));
+
+        //holder.thumbnail.setImageBitmap(getImageBitmap(thumbNail[position]));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(context, links.get(position), Toast.LENGTH_SHORT).show();
+                VideoInfo videoInfo=new VideoInfo(videoID[position], videoTitle[position],
+                        description[position], time[position], channelName[position]);
+
+                Intent intent=new Intent(context,VideoPlayer.class);
+                intent.putExtra("videoInfo",videoInfo);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

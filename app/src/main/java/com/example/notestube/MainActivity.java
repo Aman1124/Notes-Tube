@@ -19,8 +19,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
     int fragID = 2;
     String apiKey = "AIzaSyDmsn8t4HW_VeyGp8m8IgFJkzxtDCJ0Qy8";
+
+    ConstraintLayout loadingAnim;
 
 
     public static class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
@@ -98,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        loadingAnim = findViewById(R.id.homeLoadingAnim);
 
        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
            @Override
@@ -112,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
                        break;
                    default:
                        selectedFragment = new Dashboard(titles, channels, times, thumbnails, youtubeLinks, descriptions);
-                       fragID = 1;
                        openHome();
                        break;
                }
@@ -177,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q="+
                         query+
                         "&type=video&key=" + apiKey;
+                loadingAnim.setVisibility(View.VISIBLE);
 
                 InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 assert mgr != null;
@@ -304,7 +309,8 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,
                             new SearchFragment(titles, channels, times, thumbnails, youtubeLinks, descriptions)).commit();
 
-                Toast.makeText(MainActivity.this, "Fetching Complete " + fragID, Toast.LENGTH_SHORT).show();
+                loadingAnim.setVisibility(View.INVISIBLE);
+                //Toast.makeText(MainActivity.this, "Fetching Complete " + fragID, Toast.LENGTH_SHORT).show();
 
 
             } catch (Exception e) {
