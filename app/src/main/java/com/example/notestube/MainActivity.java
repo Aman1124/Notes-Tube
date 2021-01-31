@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> youtubeLinks,thumbnails,titles,descriptions,channels,times;
     ArrayList<Bitmap> thumbs;
 
-    int fragID = 1;
+    int fragID = 2;
+    String apiKey = "AIzaSyDmsn8t4HW_VeyGp8m8IgFJkzxtDCJ0Qy8";
 
     String[] title = new String[]{"Abc", "Xyz", "Pqr"};
     String[] channel = new String[]{"123", "789", "098"};
@@ -118,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                        selectedFragment = new History(img);
                        break;
                    default:
+                       //Toast.makeText(MainActivity.this, "FragID = " + fragID, Toast.LENGTH_SHORT).show();
                        selectedFragment = new Dashboard(titles, channels, times, thumbs, youtubeLinks, descriptions);
                        fragID = 1;
                        openHome();
@@ -134,19 +136,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openHome(){
-        String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q="+
-                "mann mast magan"+
-                "&type=video&key=AIzaSyDmsn8t4HW_VeyGp8m8IgFJkzxtDCJ0Qy8";
+        if(fragID != 1) {
+            String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q=" +
+                    "mann mast magan" +
+                    "&type=video&key=" + apiKey;
 
-        InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        assert mgr != null;
-        //mgr.hideSoftInputFromWindow(weatherData.getWindowToken(), 0);
-        try {
-            DownloadTask task = new DownloadTask();
-            task.execute(url);
-            fragID = 1;
-        } catch (Exception e){
-            Toast.makeText(getApplicationContext(),"Unable to find weather!",Toast.LENGTH_LONG).show();
+            InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            assert mgr != null;
+            //mgr.hideSoftInputFromWindow(weatherData.getWindowToken(), 0);
+            try {
+                DownloadTask task = new DownloadTask();
+                task.execute(url);
+                fragID = 1;
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Unable to find weather!", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -180,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 searchView.clearFocus();
                 String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q="+
                         query+
-                        "&type=video&key=AIzaSyDmsn8t4HW_VeyGp8m8IgFJkzxtDCJ0Qy8";
+                        "&type=video&key=" + apiKey;
 
                 InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 assert mgr != null;
