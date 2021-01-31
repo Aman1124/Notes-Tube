@@ -12,20 +12,34 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.local.QueryResult;
+
+import java.util.ArrayList;
 
 
 public class History extends Fragment {
 
     String[] videoTitle, channelName;
     Bitmap[] thumbNail;
+    FirebaseFirestore firestore;
+    ArrayList<VideoInfo> historyList;
+    ArrayList<String> videoTitle1,channelName1;
+    int i;
 
     RecyclerView recyclerView;
 
-    public History(String[] vT, String[] cN, Bitmap[] tbNail) {
-        videoTitle = vT;
-        channelName = cN;
+    public History(Bitmap[] tbNail) {
+//        videoTitle = vT;
+//        channelName = cN;
         thumbNail = tbNail;
     }
 
@@ -33,9 +47,47 @@ public class History extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        firestore=FirebaseFirestore.getInstance();
+        historyList=new ArrayList<VideoInfo>();
+        videoTitle1=new ArrayList<String>();
+        channelName1=new ArrayList<String>();
 
+        Query firstQuery=firestore.collection("videos");
+firstQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+    @Override
+    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+        if(error!=null)
+        {
+            System.out.println("Error: "+ error.getMessage());
+        }
+        else
+        {
+            assert value != null;
+            for(DocumentChange doc: value.getDocumentChanges())
+            {
+                if(doc.getType()==DocumentChange.Type.ADDED)
+                {
+                    VideoInfo videoInfo=doc.getDocument().toObject(VideoInfo.class);
+                    System.out.println(videoInfo.videoId);
+                    System.out.println(videoInfo.channel);
+                    System.out.println(videoInfo.title);
 
+                    historyList.add(videoInfo);
+                    videoTitle1.add(videoInfo.title);
+                    channelName1.add(videoInfo.channel);
+                }
+            }
+        }
+    }
+});
 
+    videoTitle=  videoTitle1.toArray(new String[0]);
+    channelName=  channelName1.toArray(new String[0]);
+    if(historyList.isEmpty()){
+        Toast.makeText(getContext(), "Empty List", Toast.LENGTH_SHORT).show();
+    }
+//    else
+//        System.out.println(videoTitle1.get(0));
     }
 
     @Override

@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                        selectedFragment = new Notes();
                        break;
                    case R.id.nav_history:
-                       selectedFragment = new History(title, channel, img);
+                       selectedFragment = new History(img);
                        break;
                    default:
                        selectedFragment = new Dashboard(titles, channels, times, thumbs, youtubeLinks, descriptions);
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     private void openHome(){
         String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q="+
                 "mann mast magan"+
-                "&type=video&key=AIzaSyA0epWMVtHlvhZF2WsApIUFr_D0dFU_IY4";
+                "&type=video&key=AIzaSyDmsn8t4HW_VeyGp8m8IgFJkzxtDCJ0Qy8";
 
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         assert mgr != null;
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 searchView.clearFocus();
                 String url = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&q="+
                         query+
-                        "&type=video&key=AIzaSyA0epWMVtHlvhZF2WsApIUFr_D0dFU_IY4";
+                        "&type=video&key=AIzaSyDmsn8t4HW_VeyGp8m8IgFJkzxtDCJ0Qy8";
 
                 InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 assert mgr != null;

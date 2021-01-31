@@ -68,7 +68,6 @@ public class VideoPlayer extends YouTubeBaseActivity {
         } else
             super.onBackPressed();
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +105,6 @@ public class VideoPlayer extends YouTubeBaseActivity {
                 }
             }
         });
-
 
         mYoutubePlayerView=findViewById(R.id.youtubeplay);
         titleTV = findViewById(R.id.videoPlayerTitle);
