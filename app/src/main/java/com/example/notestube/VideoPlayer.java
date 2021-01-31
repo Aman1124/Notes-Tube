@@ -45,7 +45,7 @@ public class VideoPlayer extends YouTubeBaseActivity {
     ImageView dropDown;
     FirebaseFirestore db;
 
-    String title, time, channel, description,videoId;
+    String title, time, channel, description,videoId,thumbnail,userid;
     EditText editText;
     Boolean descExpanded = false;
     Boolean editNote = false;
@@ -81,6 +81,8 @@ public class VideoPlayer extends YouTubeBaseActivity {
         channel=videoInfo.channel;
         description=videoInfo.description;
         videoId=videoInfo.videoId;
+        thumbnail=videoInfo.thumbnail;
+        userid=FirebaseAuth.getInstance().getUid();
 
         db=FirebaseFirestore.getInstance();
 
@@ -90,7 +92,8 @@ public class VideoPlayer extends YouTubeBaseActivity {
         history.put("description",description);
         history.put("videoId",videoId);
         history.put("time",time);
-//        history.put("thumbnail",thumbnail);
+        history.put("thumbnail",thumbnail);
+        history.put("userid",userid);
 
         db.collection("videos").add(history).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override

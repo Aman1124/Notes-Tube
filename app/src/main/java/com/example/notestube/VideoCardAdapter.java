@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +30,7 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.view
     ArrayList<String> videoTitle, channelName, timeStamps, links, descriptions;
     ArrayList<String> thumbNail;
     Context context;
+    FirebaseAuth mAuth;
 
     public VideoCardAdapter(Context ct, ArrayList<String> vT, ArrayList<String> cN, ArrayList<String> tS,
                             ArrayList<String> tbNail, ArrayList<String> lk, ArrayList<String> desc){
@@ -59,7 +62,9 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.view
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, links.get(position), Toast.LENGTH_SHORT).show();
-                VideoInfo videoInfo=new VideoInfo(links.get(position),videoTitle.get(position),descriptions.get(position),timeStamps.get(position),channelName.get(position));
+                mAuth=FirebaseAuth.getInstance();
+                String userid=mAuth.getUid();
+                VideoInfo videoInfo=new VideoInfo(links.get(position),videoTitle.get(position),descriptions.get(position),timeStamps.get(position),channelName.get(position), thumbNail.get(position),userid);
                 Intent intent=new Intent(context,VideoPlayer.class);
                 intent.putExtra("videoInfo",videoInfo);
                 context.startActivity(intent);
@@ -100,7 +105,6 @@ public class VideoCardAdapter extends RecyclerView.Adapter<VideoCardAdapter.view
         protected Bitmap doInBackground(String... urls) {
 
             try {
-
                 URL url = new URL(urls[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();

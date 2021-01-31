@@ -246,7 +246,6 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 JSONObject jsonObject=new JSONObject(s);
-
                 String items=jsonObject.getString("items");
                 System.out.println(items);
 

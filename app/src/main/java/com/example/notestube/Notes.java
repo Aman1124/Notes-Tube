@@ -24,9 +24,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class Notes extends Fragment {
 
     ArrayList<String> videoIDs = new ArrayList<>();
-    ArrayList<String> notesHeading = new ArrayList<>();;
+    ArrayList<String> notesHeading = new ArrayList<>();
+    ArrayList<String> data=new ArrayList<String>();
     ArrayAdapter<String> arrayAdapter;
-
     SQLiteDatabase database;
 
     public Notes() {

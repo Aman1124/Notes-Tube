@@ -30,8 +30,9 @@ public class History extends Fragment {
 
     String[] videoTitle, channelName, thumbNail;
     FirebaseFirestore firestore;
+    FirebaseAuth mAuth;
     ArrayList<VideoInfo> historyList;
-    ArrayList<String> videoTitle1, channelName1;
+    ArrayList<String> videoTitle1, channelName1,thumbnail1;
     int i;
 
     RecyclerView recyclerView;
@@ -47,6 +48,9 @@ public class History extends Fragment {
         historyList = new ArrayList<VideoInfo>();
         videoTitle1 = new ArrayList<String>();
         channelName1 = new ArrayList<String>();
+        thumbnail1= new ArrayList<String>();
+        mAuth=FirebaseAuth.getInstance();
+        final String userId=mAuth.getUid();
 
         Query firstQuery = firestore.collection("videos");
         firstQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -59,18 +63,27 @@ public class History extends Fragment {
                     for (DocumentChange doc : value.getDocumentChanges()) {
                         if (doc.getType() == DocumentChange.Type.ADDED) {
                             VideoInfo videoInfo = doc.getDocument().toObject(VideoInfo.class);
-
-
-                            historyList.add(videoInfo);
-                            videoTitle1.add(videoInfo.title);
-                            channelName1.add(videoInfo.channel);
-
+                            assert userId != null;
+                            System.out.println(userId);
+                            System.out.println(videoInfo.userid);
+                            if(userId.equals(videoInfo.userid) && !videoTitle1.contains(videoInfo.title)) {
+//                                System.out.println("USER IDS MATCHED");
+                                historyList.add(videoInfo);
+                                videoTitle1.add(videoInfo.title);
+                                channelName1.add(videoInfo.channel);
+                                thumbnail1.add(videoInfo.thumbnail);
+                            }
+                            else
+                            {
+                                System.out.println("DID NOT MATCH");
+                            }
                             Log.i("videoTitle", "inside:" + String.valueOf(videoTitle1));
                         }
                     }
 
                     videoTitle = videoTitle1.toArray(new String[0]);
                     channelName = channelName1.toArray(new String[0]);
+                    thumbNail= thumbnail1.toArray(new String[0]);
                     createLayout();
                 }
             }
