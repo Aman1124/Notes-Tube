@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> youtubeLinks,thumbnails,titles,descriptions,channels,times;
 
     int fragID = 2;
-    String apiKey = "AIzaSyDmsn8t4HW_VeyGp8m8IgFJkzxtDCJ0Qy8";
+    String apiKey = "AIzaSyCHeidZz2QigvYheHLZdblymI1pw6q-J5Q";
 
     ConstraintLayout loadingAnim;
 
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void logout(View view) {
+    public void logout() {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         finish();
@@ -206,6 +206,16 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(queryTextListener);
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == R.id.logout) {
+            logout();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public class DownloadTask extends AsyncTask<String,Void,String>{
